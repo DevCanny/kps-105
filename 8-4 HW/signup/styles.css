@@ -1,0 +1,51 @@
+#Name {
+    box-shadow: 0px 0px 10px 1px #8D8D8D;
+    border: solid 1px white;
+    padding: 5px 10px;
+    /* border-color: red; */
+    width: 20%;
+    height: 10%;
+}
+
+#Mail {
+    box-shadow: 0px 0px 10px 1px #8D8D8D;
+    border: solid 1px white;
+    padding: 5px 10px;
+    /* border-color: red; */
+    width: 20%;
+    height: 10%;
+}
+
+#Password {
+    box-shadow: 0px 0px 10px 1px #8D8D8D;
+    border: solid 1px white;
+    padding: 5px 10px;
+    /* border-color: red; */
+    width: 20%;
+    height: 10%;
+}
+
+#RePassword {
+    box-shadow: 0px 0px 10px 1px #8D8D8D;
+    border: solid 1px white;
+    padding: 5px 10px;
+    /* border-color: red; */
+    width: 20%;
+    height: 10%;
+}
+
+#signUpButton {
+    box-shadow: 0px 0px 10px 1px #8D8D8D;
+    border: solid 1px white;
+    padding: 5px 10px;
+    background-color: rgb(111,111,111);
+    color: white;
+    width: 10%;
+    height: 5%;
+}
+
+#info {
+    width: 10%;
+    height: 10%;
+    word-wrap: break-word;
+}
