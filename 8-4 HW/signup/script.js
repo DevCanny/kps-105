@@ -43,7 +43,7 @@ const statsKey = "Stats"
 const users = [];
 
 class User {
-    constructor(name, email, password, id){
+    constructor(name, email, password, id) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -70,16 +70,16 @@ let checks = [
     specialCheck = false,
 ]
 
-function throwError(ErrorMessage){
+function throwError(ErrorMessage) {
     isSignUppable = false;
     info.innerHTML = "ERROR: " + ErrorMessage;
 }
 
-function changeBorderColor(){
-    if(UserNameCheck == true){
-        if(EmailCheck == true) {
-            if(isSignUppable == true){
-                if(verify == false){
+function changeBorderColor() {
+    if (UserNameCheck == true) {
+        if (EmailCheck == true) {
+            if (isSignUppable == true) {
+                if (verify == false) {
                     verifyPassword.style.cssText = `
                     border-color: rgb(255,0,0);
                     `;
@@ -99,29 +99,29 @@ function changeBorderColor(){
     }
 }
 
-function addClasses(parameter){
+function addClasses(parameter) {
     parameter.style.cssText = `
     text-decoration: line-through;
     color: rgb(0,255,0);
   `;
 }
 
-function removeClasses(parameter){
+function removeClasses(parameter) {
     parameter.style.cssText = `
     text-decoration: none;
     color: rgb(255,0,0);
   `;
 }
 
-UserName.addEventListener("input", function(){
+UserName.addEventListener("input", function () {
     info.innerHTML = ""
     UserNameCheck = false;
-    if(UserName.value === ""){
+    if (UserName.value === "") {
         UserName.style.cssText = `
         border-color: rgb(255,0,0);
         `;
     } else {
-        if(UserName.value.split("").length > 3){
+        if (UserName.value.split("").length > 3) {
             UserNameCheck = true
             UserName.style.cssText = `
     border-color: rgb(0,255,0);
@@ -132,10 +132,10 @@ UserName.addEventListener("input", function(){
     }
 })
 
-verifyPassword.addEventListener("input", function(){
+verifyPassword.addEventListener("input", function () {
     info.innerHTML = ""
     verify = false
-    if(verifyPassword.value === passwordInput.value){
+    if (verifyPassword.value === passwordInput.value) {
         info.innerHTML = ""
         verify = true
         verifyPassword.style.cssText = `
@@ -150,15 +150,15 @@ verifyPassword.addEventListener("input", function(){
     changeBorderColor()
 })
 
-Email.addEventListener("input", function(){
+Email.addEventListener("input", function () {
     info.innerHTML = ""
     EmailCheck = false;
-    if(Email.value === ""){
+    if (Email.value === "") {
         Email.style.cssText = `
     border-color: rgb(255,0,0);
   `;
     } else {
-        if(Email.value.split("").length > 3){
+        if (Email.value.split("").length > 3) {
             EmailCheck = true
             Email.style.cssText = `
     border-color: rgb(0,255,0);
@@ -169,10 +169,10 @@ Email.addEventListener("input", function(){
     }
 })
 
-passwordInput.addEventListener("input", function(){
+passwordInput.addEventListener("input", function () {
     isSignUppable = false;
     // NEW
-    if(passwordInput.value === ""){
+    if (passwordInput.value === "") {
         throwError("lololololol you can't see me!")
         removeClasses(specialNeed)
         removeClasses(numberNeed)
@@ -184,45 +184,45 @@ passwordInput.addEventListener("input", function(){
 
     }
 
-    if(length.test(passwordInput.value)){
-        checks[0]= true
+    if (length.test(passwordInput.value)) {
+        checks[0] = true
         addClasses(lengthNeed)
     } else {
-        checks[0]= false
+        checks[0] = false
         removeClasses(lengthNeed)
     }
-    if(number.test(passwordInput.value)){
+    if (number.test(passwordInput.value)) {
         checks[1] = true
         addClasses(numberNeed)
     } else {
-        checks[1]= false
+        checks[1] = false
         removeClasses(numberNeed)
     }
-    if(lowerString.test(passwordInput.value)){
+    if (lowerString.test(passwordInput.value)) {
         checks[2] = true
         addClasses(lowerNeed)
     } else {
-        checks[2]= false
+        checks[2] = false
         removeClasses(lowerNeed)
     }
-    if(capitalString.test(passwordInput.value)){
+    if (capitalString.test(passwordInput.value)) {
         checks[3] = true
         addClasses(capitalNeed)
     } else {
-        checks[3]= false
+        checks[3] = false
         removeClasses(capitalNeed)
     }
-    if(specialCharacter.test(passwordInput.value)){
+    if (specialCharacter.test(passwordInput.value)) {
         checks[4] = true
         addClasses(specialNeed)
     } else {
-        checks[4]= false
+        checks[4] = false
         removeClasses(specialNeed)
     }
 
-    for(let i=0; i<5; i++){
-        if(checks[i] == true){
-            if(i==4){
+    for (let i = 0; i < 5; i++) {
+        if (checks[i] == true) {
+            if (i == 4) {
                 isSignUppable = true
                 break
             }
@@ -275,7 +275,7 @@ passwordInput.addEventListener("input", function(){
     // }
 })
 
-function reset(){
+function reset() {
     UserName.value = "";
     Email.value = "";
     passwordInput.value = "";
@@ -284,78 +284,58 @@ function reset(){
 
 let key = "Users-" + Email.value
 
-SignUpButton.addEventListener("click", function(){
-//GOOD THING I AM A DATA MANAGER
-    if(isSignUppable == true){
-        if(UserNameCheck != false){
-            if(EmailCheck != false){
-                if(isSignUppable != false) {
-                    if(verify != false){
-                        const user = new User(UserName.value, Email.value, passwordInput.value)
-                        users.push(user);
-                        let ToSave = passwordInput.value
-                        // localStorage.setItem(key, JSON.stringify(users))
-                        localStorage.setItem(key, ToSave);
-                        console.log(localStorage.getItem(key, ToSave))
-                        reset();
-
-                    } else {
-                        verifyPassword.style.cssText = `
-                        border-color: rgb(255,0,0);
-                        `;
-                    }
-                } else {
-                    removeClasses(specialNeed)
-                    removeClasses(numberNeed)
-                    removeClasses(capitalNeed)
-                    removeClasses(lowerNeed)
-                    removeClasses(lengthNeed)
-                    throwError("PLEASE INPUT PASSWORD")
-                }
-            } else {
-                Email.style.cssText = `
-                border-color: rgb(255,0,0);
-              `;
-            }
-        } else {
-            UserName.style.cssText = `
-            border-color: rgb(255,0,0);
-          `;
-        }
-    } else {
+SignUpButton.addEventListener("click", function () {
+    //GOOD THING I AM A DATA MANAGER
+    if (localStorage.getItem(key)) {
         removeClasses(specialNeed)
         removeClasses(numberNeed)
         removeClasses(capitalNeed)
         removeClasses(lowerNeed)
         removeClasses(lengthNeed)
-        throwError("PLEASE INPUT PASSWORD")
+        throwError("EMAIL ALREADY  EXISTS")
+    } else {
+        if (isSignUppable == true) {
+            if (UserNameCheck != false) {
+                if (EmailCheck != false) {
+                    if (isSignUppable != false) {
+                        if (verify != false) {
+                            const user = new User(UserName.value, Email.value, passwordInput.value)
+                            users.push(user);
+                            let ToSave = passwordInput.value
+                            // localStorage.setItem(key, JSON.stringify(users))
+                            localStorage.setItem(key, ToSave);
+                            console.log(localStorage.getItem(key))
+                            reset();
+                        } else {
+                            verifyPassword.style.cssText = `
+                        border-color: rgb(255,0,0);
+                        `;
+                        }
+                    } else {
+                        removeClasses(specialNeed)
+                        removeClasses(numberNeed)
+                        removeClasses(capitalNeed)
+                        removeClasses(lowerNeed)
+                        removeClasses(lengthNeed)
+                        throwError("PLEASE INPUT PASSWORD")
+                    }
+                } else {
+                    Email.style.cssText = `
+                border-color: rgb(255,0,0);
+              `;
+                }
+            } else {
+                UserName.style.cssText = `
+            border-color: rgb(255,0,0);
+          `;
+            }
+        } else {
+            removeClasses(specialNeed)
+            removeClasses(numberNeed)
+            removeClasses(capitalNeed)
+            removeClasses(lowerNeed)
+            removeClasses(lengthNeed)
+            throwError("PLEASE INPUT PASSWORD")
+        }
     }
 });
-
-// let EmailLogIn = document.getElementById("MailLogIn")
-// let passwordInputLogIn = document.getElementById("PasswordLogIn")
-// let LogInButton = document.getElementById("LogInButton")
-
-// let data = localStorage
-
-// let loginkey = "Users-"+EmailLogIn.value
-
-// LogInButton.addEventListener("click", function(){
-//     if(EmailLogIn.value != ""){
-//         if(passwordInputLogIn.value != ""){
-//             if(data.getItem(loginkey)){
-//                 if(passwordInputLogIn.value === data.getItem(loginkey)){
-//                     console.log("looks good!")
-//                 }
-//             } else {
-//                 console.log("email does not exist")
-//             }
-//         } else {
-
-//             return "write a password shithead"
-//         }
-//     } else {
-
-//         return "write a email shithead"
-//     }
-// })

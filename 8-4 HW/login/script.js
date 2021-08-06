@@ -17,11 +17,9 @@ LogInButton.addEventListener("click", function(){
                 console.log("email does not exist")
             }
         } else {
-
-            return "write a password shithead"
+            return
         }
     } else {
-
-        return "write a email shithead"
+        return
     }
 })
