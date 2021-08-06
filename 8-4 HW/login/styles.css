@@ -11,7 +11,7 @@
     height: 10%;
 }
 
-#Mail {
+#MailLogIn {
     box-shadow: 0px 0px 10px 1px #8D8D8D;
     border: solid 1px white;
     padding: 5px 10px;
@@ -20,7 +20,7 @@
     height: 10%;
 }
 
-#Password {
+#PasswordLogIn {
     box-shadow: 0px 0px 10px 1px #8D8D8D;
     border: solid 1px white;
     padding: 5px 10px;
@@ -38,7 +38,7 @@
     height: 10%;
 }
 
-#signUpButton {
+#LogInButton {
     box-shadow: 0px 0px 10px 1px #8D8D8D;
     border: solid 1px white;
     padding: 5px 10px;

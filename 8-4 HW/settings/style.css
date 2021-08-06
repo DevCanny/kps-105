@@ -1,0 +1,15 @@
+* {
+    background-color: rgb(55,55,55);
+}
+
+.textbutton {
+    width: 75px;
+    height: auto;
+    background-color: rgb(111,111,111);
+}
+
+.textbutton a {
+    color: white;
+    text-decoration: none;
+    background-color: rgb(111,111,111);
+}

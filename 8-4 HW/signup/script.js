@@ -24,6 +24,17 @@
 // {1,8} - 1-8 characters DUH!
 // {,8} = less than 8 characters
 
+let data = localStorage
+let cookie = data.getItem("LoggedOn")
+
+document.addEventListener("load", function(){
+    if(cookie){
+        console.log(cookie)
+    } else {
+        location.href = "http://127.0.0.1:5500/8-4%20HW/signup/index.html"
+    }
+})
+
 let passwordInput = document.getElementById("Password")
 let SignUpButton = document.getElementById("signUpButton")
 let UserName = document.getElementById("Name")
@@ -282,9 +293,14 @@ function reset() {
     verifyPassword.value = "";
 }
 
-let key = "Users-" + Email.value
+let allUsers = []
+
+if(localStorage.getItem("AllUsers")){
+    allUsers.push(localStorage.getItem("AllUsers"))
+}
 
 SignUpButton.addEventListener("click", function () {
+let key = "Users-" + Email.value
     //GOOD THING I AM A DATA MANAGER
     if (localStorage.getItem(key)) {
         removeClasses(specialNeed)
@@ -301,11 +317,13 @@ SignUpButton.addEventListener("click", function () {
                         if (verify != false) {
                             const user = new User(UserName.value, Email.value, passwordInput.value)
                             users.push(user);
-                            let ToSave = passwordInput.value
-                            // localStorage.setItem(key, JSON.stringify(users))
+                            let ToSave = [passwordInput.value, UserName.value]
+                            allUsers.push(JSON.stringify(allUsers))
+                            localStorage.setItem("AllUsers", JSON.stringify(allUsers))
                             localStorage.setItem(key, ToSave);
-                            console.log(localStorage.getItem(key))
-                            reset();
+                            reset()
+                            // console.log(localStorage.getItem(key))
+                            location.href = "http://127.0.0.1:5500/8-4%20HW/login/login.html"
                         } else {
                             verifyPassword.style.cssText = `
                         border-color: rgb(255,0,0);
