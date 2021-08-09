@@ -46,6 +46,7 @@ let capitalNeed = document.getElementById("capitalNeed")
 let specialNeed = document.getElementById("specialNeed")
 let numberNeed = document.getElementById("numberNeed")
 let lengthNeed = document.getElementById("lengthNeed")
+let proifileInput = document.getElementById("ProfilePicture")
 
 let latestUser = 0
 
@@ -296,7 +297,7 @@ function reset() {
 let allUsers = []
 
 if(localStorage.getItem("AllUsers")){
-    allUsers.push(localStorage.getItem("AllUsers"))
+    allUsers = JSON.parse(localStorage.getItem("AllUsers"))
 }
 
 SignUpButton.addEventListener("click", function () {
@@ -317,8 +318,13 @@ let key = "Users-" + Email.value
                         if (verify != false) {
                             const user = new User(UserName.value, Email.value, passwordInput.value)
                             users.push(user);
-                            let ToSave = [passwordInput.value, UserName.value]
-                            allUsers.push(JSON.stringify(allUsers))
+                            let ToSave = [passwordInput.value, UserName.value, proifileInput.value]
+                            if(proifileInput.value === ""){
+                                ToSave = [passwordInput.value, UserName.value, "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg"]
+                            } else {
+                                ToSave = [passwordInput.value, UserName.value, proifileInput.value]
+                            }
+                            allUsers.push(user)
                             localStorage.setItem("AllUsers", JSON.stringify(allUsers))
                             localStorage.setItem(key, ToSave);
                             reset()
