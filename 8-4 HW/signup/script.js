@@ -133,6 +133,11 @@ UserName.addEventListener("input", function () {
         border-color: rgb(255,0,0);
         `;
     } else {
+        if(specialCharacter.test(UserName.value)){
+            UserNameCheck = false;
+            info.innerHTML = "ERROR: USERNAME MUST NOW CONTAIN ANY SPECIAL CHARACTERS CHARACTERS"
+            return
+        }
         if (UserName.value.split("").length > 3) {
             UserNameCheck = true
             UserName.style.cssText = `
@@ -327,9 +332,10 @@ let key = "Users-" + Email.value
                             allUsers.push(user)
                             localStorage.setItem("AllUsers", JSON.stringify(allUsers))
                             localStorage.setItem(key, ToSave);
+                            localStorage.setItem("LoggedOn", "Users-" + Email.value)
                             reset()
                             // console.log(localStorage.getItem(key))
-                            location.href = "http://127.0.0.1:5500/8-4%20HW/login/login.html"
+                            location.href = "http://127.0.0.1:5500/8-4%20HW/main/index.html"
                         } else {
                             verifyPassword.style.cssText = `
                         border-color: rgb(255,0,0);

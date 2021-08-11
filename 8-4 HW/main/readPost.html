@@ -10,13 +10,21 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <title>Document</title>
+    <title>Read Post</title>
 </head>
 
 <body class="bg-gray-100">
     <button class="absolute text-black transition duration-300 hover:text-gray-400 text-3xl right-4 top-4"
-        title="logout" id="logout">
+        title="Go Back" id="logout">
         <i class="fas fa-sign-out-alt"></i>
+    </button>
+    <button class="absolute text-black transition duration-300 hover:text-gray-400 text-3xl left-16 top-4 hidden"
+        title="Edit Post" id="edit">
+        <i class="fas fa-pencil-alt"></i>
+    </button>
+    <button class="absolute text-black transition duration-300 hover:text-gray-400 text-3xl left-4 top-4 hidden"
+        title="Delete Post" id="deletePost">
+        <i class="fas fa-trash"></i>
     </button>
     <main class="container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-white">
         <div class="post_title text-center">
@@ -27,11 +35,14 @@
         </div>
     </main>
     <!-- <main class="container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-white"> -->
-    <div class="container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-gray-400">
-        <input type="text" class="font-bold shadow-xl" id="commentTextField">
-        <input type="submit" class="font-bold bg-white text-black" id="sendButton" value="Comment">
+    <div class="container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-gray-400 flex justify-between">
+        <textarea rows="10" class="w-full border border-gray-300 rounded-xl mt-4 pt-4 focus:outile-none"
+            id="commentTextField"></textarea>
+        <input type="submit" class="font-bold bg-white text-black mt-4 pt-4 " id="sendButton" value="Comment">
     </div>
-    <h1 class="font-bold text-xl">COMMENTS:</h1>
+    <div class="container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-gray-400">
+        <h1 class="font-bold text-xl">COMMENTS:</h1>
+    </div>
     <div class="commentContainer container mx-auto my-8 py-4 px-8 shadow-xl rounded-xl bg-gray-400">
 
     </div>
@@ -59,9 +70,10 @@
         let title = document.querySelector("#title")
         let body = document.querySelector("#postbody")
         let goBack = document.querySelector("#logout")
+        let edit = document.getElementById("edit");
+        let deletePost = document.getElementById("deletePost")
 
         let grabbedData = data.getItem(cookie).split(",")
-
 
         let container = document.querySelector(".commentContainer")
 
@@ -70,9 +82,15 @@
 
         let post = JSON.parse(currentPost)
 
+        let postsTable = [];
+
+        if (localStorage['posts']) {
+            postsTable = JSON.parse(localStorage.getItem('posts'))
+        }
+
         let comments = [];
 
-        let commentsData = data.getItem("Comments"+ post.id)
+        let commentsData = data.getItem("Comments-" + post.id)
 
         if (currentPost) {
 
@@ -85,7 +103,7 @@
 
         body.innerHTML = post.body
 
-        if(commentsData){
+        if (commentsData) {
             comments = JSON.parse(commentsData)
         }
 
@@ -96,42 +114,67 @@
             location.href = "http://127.0.0.1:5500/8-4%20HW/main/timeline.html"
         })
 
+        if(JSON.parse(currentPost).userId == localStorage.getItem("LoggedOn")){
+            deletePost.classList.remove("hidden")
+            edit.classList.remove("hidden")
+        } else {
+            deletePost.classList.add("hidden")
+            edit.classList.add("hidden")
+        }
+
+        deletePost.addEventListener("click", function(){
+            if(JSON.parse(currentPost).userId == localStorage.getItem("LoggedOn")){
+                if (localStorage['posts']) {
+                    
+                }
+            } else {
+                deletePost.classList.add("hidden")
+                edit.classList.add("hidden")
+            }
+        })
+
+        edit.addEventListener("click", function(){
+            if(JSON.parse(currentPost).userId == localStorage.getItem("LoggedOn")){
+                
+            } else {
+                deletePost.classList.add("hidden")
+                edit.classList.add("hidden")
+            }
+        })
+
         sendButton.addEventListener("click", e => {
             e.preventDefault();
-            let comment = new Comment(commentField.value)
-            comments.push(comment)
+            if (commentField.value.trim() !== "") {
+                if (commentsData) {
+                    comments = JSON.parse(commentsData)
+                }
+                let comment = new Comment(commentField.value)
+                comments.push(comment)
+                // console.log(comments)
+                data.setItem("Comments" + post.id, JSON.stringify(comments))
+                container.insertAdjacentHTML('afterbegin', `
+                <div class="post rounded-xl bg-white my-4 shadow-lg">
+                    <div class="post_header w-full flex items-center justify-between px-5 py-3">
+                        <p>${grabbedData[1]}: ${commentField.value}</p>
+                    </div>
+                </div>
+                `)
+            }
             commentField.value = "";
-            console.log(comments)
-            data.setItem("Comments"+ post.id, JSON.stringify(comments))
-            container.insertAdjacentHTML('afterbegin', `
-        <div class="post rounded-xl bg-white my-4 shadow-lg">
-            <div class="post_header w-full flex items-center justify-bewtween px-5 py-3">
-                <p>${grabbedData[1]}</p>
-                <h1 class="font-bold text-xl">
-                    ${commentField.value}
-                </h1>
-                
-            </div>
-            <input value="${el.id}" hidden>
-        </div>
-        `)
         })
 
         comments.forEach(el => {
+            let grabbeddata = data.getItem(el.sender).split(",")
             container.insertAdjacentHTML('afterbegin', `
-        <div class="post rounded-xl bg-white my-4 shadow-lg">
-            <div class="post_header w-full flex items-center justify-bewtween px-5 py-3">
-                <p>${el.sender}:</p>
-                <h1 class="font-bold text-xl">
-                    ${el.comment}
-                </h1>
-                <p class="text-gray-300">${el.created.split("T")[0]}</p>
+            <div class="post rounded-xl bg-white my-4 shadow-lg">
+                <div class="post_header w-full flex items-center justify-between px-5 py-3">
+                    <p>${grabbeddata[1]}: ${el.comment}</p>
+                    <p class="text-gray-300">${el.created.split("T")[0]}</p>
+                </div>
+                <input value="${el.id}" hidden>
             </div>
-            <input value="${el.id}" hidden>
-        </div>
-        `)
+            `)
         })
     </script>
 </body>
-
 </html>

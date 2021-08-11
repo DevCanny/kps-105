@@ -19,6 +19,8 @@ let password = document.getElementById("password")
 let logout = document.getElementById("logout")
 let info = document.getElementById("info")
 let avatar = document.getElementById("avatar")
+let timeline = document.getElementById("timeline")
+
 
 let postButton = document.getElementById("postButton")
 let body = document.getElementById("body")
@@ -55,6 +57,10 @@ avatar.src = grabbedData[2]
 password.addEventListener("mouseover", function(){
     info.innerHTML = "My Password Is:"
     username.innerHTML = grabbedData[0]
+})
+
+timeline.addEventListener("click", function(){
+    location.href = "http://127.0.0.1:5500/8-4%20HW/main/timeline.html"
 })
 
 logout.addEventListener("click", function(){
@@ -107,6 +113,8 @@ postButton.addEventListener("click", e =>{
         let post = new Post(title.value, body.value)
         postsTable.push(post)
         localStorage.setItem("posts", JSON.stringify(postsTable))
+        localStorage.setItem('currentPost', JSON.stringify(post.id));
+        location.href = "http://127.0.0.1:5500/8-4%20HW/main/readPost.html"
         reset()
        
         // console.log(post)
