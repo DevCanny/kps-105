@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas class="border-2 bg-black mx-auto border-black" id='canvas'> </canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d")
+        canvas.width = 1200;
+        canvas.height = 800;
+
+        let x = canvas.width / 2
+        let y = canvas.height / 2
+
+        // //GROUND
+        // ctx.fillStyle = 'rgb(0,255,0)'
+        // ctx.fillRect(0,600,1200,200)
+        // //SUN
+        // ctx.fillStyle = 'yellow'
+        // ctx.fillRect(0,0,150,150)
+        // //SKY
+        // ctx.fillStyle = "rgb(0,144,255)"
+        // ctx.fillRect(150,0,1050,150)
+        // ctx.fillRect(0,150,1200,450)
+        // //HUMAN -- START
+        // //HEAD
+        // ctx.fillStyle = "rgb(197, 140, 133)"
+        // ctx.beginPath()
+        // ctx.arc(450,300,70,0,Math.PI * 2)
+        // ctx.fill()
+        // //EYES
+        // ctx.fillStyle = "rgb(0, 0, 0)"
+        // ctx.beginPath()
+        // ctx.arc(390,275,15,0,Math.PI * 2)
+        // ctx.fill()
+
+        // ctx.fillStyle = "rgb(0, 0, 0)"
+        // ctx.beginPath()
+        // ctx.arc(475,275,15,0,Math.PI * 2)
+        // ctx.fill()
+        // // MOUTH
+        // ctx.fillStyle = "rgb(0, 0, 0)"
+        // ctx.beginPath()
+        // ctx.arc(450,325,15,0,Math.PI)
+        // ctx.fill()
+        // //BODY
+
+        // //HUMAN -- END
+
+        //CIRCLE
+
+        // let speed = 10
+        // let gravity = 5;
+        // let circleSize = 50
+
+        // let direction = Math.floor(Math.random() * 10)
+        // let directiony = Math.floor(Math.random() * 10)
+        // console.log(direction)
+        // console.log(directiony)
+
+        // function test(){
+        //     requestAnimationFrame(test)
+        //     ctx.clearRect(0,0,canvas.width, canvas.height)
+        //     DrawCircle();
+        //     if (direction > 6){
+        //         if(x != canvas.width - circleSize){
+        //             x+=speed;
+        //         } else {
+        //             direction = Math.floor(Math.random() * 10)
+        //         }
+        //     } else {
+        //         if(x != canvas.width - canvas.width + circleSize){
+        //             x-=speed;
+        //         } else {
+        //             direction = Math.floor(Math.random() * 10)
+        //         }
+        //     }
+        //     if(directiony > 6){
+        //         if(y != 0 + circleSize){
+        //             y-=speed;
+        //         } else {
+        //             directiony = Math.floor(Math.random() * 10)
+        //         }
+        //     } else {
+        //         if(y != 800 - circleSize){
+        //             y+=speed;
+        //         } else {
+        //             directiony = Math.floor(Math.random() * 10)
+        //         }
+        //     }
+        // }
+        // test()
+
+        // function DrawCircle(){
+        //     const red = Math.floor(Math.random() * 256);
+        //     const green = Math.floor(Math.random() * 256);
+        //     const blue = Math.floor(Math.random() * 256);
+        //     ctx.fillStyle= `rgb(144,50,255)`
+        //     ctx.beginPath();
+        //     ctx.arc(x,y,circleSize,Math.PI * 2, false);
+        //     ctx.fill()
+        // }
+
+
+        // document.addEventListener("keydown", e =>{
+        //     if(e.keyCode == 40){
+        //         if(y != 800 - circleSize){
+        //             y+=speed;
+        //         }
+        //     } else if(e.keyCode == 39){
+        //         if(x != 1200 - circleSize){
+        //             x+=speed;
+        //         }
+        //     } else if(e.keyCode == 37){
+        //         if(x != 0 + circleSize){
+        //             x-=speed;
+        //         }
+        //     } else if(e.keyCode == 38){
+        //         if(y != 0 + circleSize){
+        //             y-=speed;
+        //         }
+        //     }
+        // })
+
+        let points = {
+            x: undefined,
+            y: undefined,
+        }
+
+        let totalStars = 1000
+
+        let stars = [];
+
+        class Star {
+            constructor(x, y, xSpeed, ySpeed, radius, red, green, blue) {
+                this.x = x;
+                this.y = y;
+                this.xSpeed = xSpeed;
+                this.ySpeed = ySpeed;
+                this.radius = radius;
+                this.red = red;
+                this.green = green;
+                this.blue = blue;
+            }
+
+            drawStars() {
+                ctx.fillStyle = `rgb(${this.red},${this.green},${this.blue})`
+                ctx.beginPath()
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+                ctx.fill()
+            }
+
+            move() {
+                if (this.x + this.radius >= canvas.width || this.x <= this.radius) {
+                    this.xSpeed = -this.xSpeed
+                }
+                if (this.y + this.radius >= canvas.height || this.y <= this.radius) {
+                    this.ySpeed = -this.ySpeed
+                }
+                this.x += this.xSpeed;
+                this.y += this.ySpeed;
+            }
+
+            moveToCursor(mouseX, mouseY) {
+                this.x = mouseX;
+                this.y = mouseY;
+            }
+
+            getClose() {
+                if(points.x - this.x < 20 && points.x - this.x > -20 && points.y - this.y < 20 && points.y - this.x > -20){
+                    console.log("test")
+                    this.radius = 15
+                } else {
+                    this.radius = 5
+                }
+            }
+        }
+
+
+
+        for (let i = 0; i < totalStars; i++) {
+            let radius = 5;
+            let xPostion = Math.random() * (canvas.width - radius * 2) + radius
+            let yPostion = Math.random() * (canvas.height - radius * 2) + radius
+            let xSpeed = (Math.random() - 0.5) * 5;
+            let ySpeed = (Math.random() - 0.5) * 5;
+            let red = Math.floor(Math.random() * 256);
+            let green = Math.floor(Math.random() * 256);
+            let blue = Math.floor(Math.random() * 256);
+
+            let star = new Star(xPostion, yPostion, xSpeed, ySpeed, radius, red, green, blue)
+
+            stars.push(star)
+            // let newBall = new Ball(xPostion, yPostion)
+        }
+
+        // document.addEventListener("click", e => {
+        //     for(let i = 0; i<stars.length; i++){
+        //         stars[i].drawStars()
+        //         stars[i].moveToCursor(e.screenX, e.screenY)
+        //         stars[i].move()
+        //     }
+        // })
+
+        window.addEventListener("click", e => {
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].drawStars()
+                stars[i].moveToCursor((e.screenX) - 235, (e.screenY) - 55)
+                stars[i].move()
+            }
+        })
+
+        window.addEventListener("mousemove", e => {
+            points.x = e.screenX
+            points.y = e.screenY
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].getClose()
+            }
+        })
+
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            requestAnimationFrame(animate)
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].drawStars()
+                stars[i].move()
+            }
+        }
+        animate()
+    </script>
+</body>
+
+</html>
