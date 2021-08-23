@@ -15,7 +15,7 @@ let changeid = document.getElementById("changeId")
 
 
 
-let yourId = 2
+let yourId = 1
 
 function displayDetails(el) {
     overview.insertAdjacentHTML('afterbegin', `
@@ -73,7 +73,7 @@ function displayDetails(el) {
 
 
 function clear(){
-    while(overview.firstChild) {
+    while(overview.firstChild){
         overview.removeChild(overview.firstChild);
     }
 }
@@ -89,8 +89,8 @@ function displayPosts(el) {
     <div class="post_body px-5 py-3">
         ${el.body.slice(0, 219)}
     </div>
-    <div class="container flex relative h-auto w-full position-fixed" id="displayComment">
-
+    <div class="container flex relative h-auto w-full position-fixed hidden" id="commentSection">
+        
     </div>
     <input value="${el.id}" hidden>
 </div>
@@ -189,18 +189,33 @@ fetch('http://jsonplaceholder.typicode.com/comments')
 .then(json => {
     document.addEventListener("click", e => {
         if(e.target.classList.contains("actualpost_head")) {
+            e.target.nextElementSibling.nextElementSibling.classList.remove("hidden")
+            while(e.target.nextElementSibling.nextElementSibling.firstChild) {
+                e.target.nextElementSibling.nextElementSibling.removeChild(e.target.nextElementSibling.nextElementSibling.firstChild);
+            }
+            // console.log("fart")
             json.forEach(el => {
                 if(el.postId == e.target.nextElementSibling.nextElementSibling.nextElementSibling.value){
-                    console.log(el.body)
+                    e.target.nextElementSibling.nextElementSibling.insertAdjacentHTML("afterbegin", `
+                        <div class="post rounded-xl h-auto w-full bg-white my-4 shadow-lg">
+                            <div class="post_header flex items-center justify-between px-5 py-3">
+                                <p>${el.name}: ${el.body}</p>
+                            </div>
+                        </div>
+                    `)
                 }
             })
         }
     })
 });
 
+let defaultText = "Change User Id lol"
+
+changeid.value = defaultText
+
 function resetToDefault(){
     setTimeout(function(){
-        changeid.value = "Change User Id lol"
+        changeid.value = defaultText
     }, 3000)
 }
 
@@ -210,7 +225,7 @@ changeid.addEventListener('click', function(){
         changeid.value = "Successfully changed ID!"
         resetToDefault()
     } else {
-        changeid.value = "Uh oh! Something went wrong!"
+        changeid.value = "Uh oh! Something went wrong! Please type a number and number only. Must be valid id."
         resetToDefault()
     }
 })

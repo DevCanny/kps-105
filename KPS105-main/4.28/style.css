@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: crimson;
+  color: white;
+}
+
+.header .logo {
+  padding-left: 1rem;
+}
+
+.header .menu__desktop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .menu__desktop .items {
+  padding: 1rem 2rem;
+  list-style: none;
+  -webkit-transition: .3s;
+  transition: .3s;
+  font-weight: bold;
+}
+
+.header .menu__desktop .items:hover {
+  background-color: white;
+  color: crimson;
+  cursor: pointer;
+}
+
+.header .menu__mobile {
+  display: none;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .header .menu__desktop {
+    display: none;
+  }
+  .header .menu__mobile {
+    display: block;
+  }
+}
+
+.main {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.main .contents {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  -ms-grid-rows: (250px)[3];
+      grid-template-rows: repeat(3, 250px);
+  gap: 1rem;
+}
+
+.main .contents .box {
+  border-radius: 10px;
+  background-color: rgba(220, 20, 60, 0.5);
+  border: 5px solid crimson;
+}
+
+@media (max-width: 1024px) {
+  .main .contents {
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    -ms-grid-rows: (250px)[4];
+        grid-template-rows: repeat(4, 250px);
+  }
+}
+
+@media (max-width: 768px) {
+  .main .contents {
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+    -ms-grid-rows: (250px)[6];
+        grid-template-rows: repeat(6, 250px);
+  }
+}
+
+@media (max-width: 576px) {
+  .main .contents {
+    display: block;
+  }
+  .main .contents .box {
+    width: 95%;
+    margin: auto;
+    height: 250px;
+    margin-bottom: 1rem;
+  }
+}
+/*# sourceMappingURL=style.css.map */

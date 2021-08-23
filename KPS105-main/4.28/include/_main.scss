@@ -1,0 +1,36 @@
+.main {
+    width: 100%;
+    margin: 1.5rem 0;
+    .contents {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 250px);
+        gap: 1rem;
+        .box {
+            border-radius: 10px;
+            background-color: $bg;
+            border: $border;
+        }
+
+        @media (max-width: 1024px){
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 250px);
+        }
+
+        @media (max-width: 768px){
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(6, 250px);
+        }
+
+        @media (max-width: 576px){
+            display: block; 
+            .box {
+                width: 95%;
+                margin: auto;
+                height: 250px;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $myColor;
+    color: $color1;
+    .logo {
+        padding-left: 1rem;
+    }
+
+    .menu {
+        &__desktop {
+            display: flex;
+            align-items: center;
+            .items {
+                padding: 1rem 2rem;
+                list-style: none;
+                transition: .3s;
+                font-weight: bold;
+                &:hover {
+                    background-color: $color1;
+                    color: $myColor;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &__mobile {
+            display: none;
+            padding: 1rem;
+        }
+
+        @media(max-width: 768px){
+            &__desktop {
+                display: none;
+            }
+
+            &__mobile {
+                display: block;
+            }
+        }
+    }
+}

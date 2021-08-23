@@ -1,0 +1,21 @@
+@mixin flexItems($direction, $justify, $items, $ftnStyle) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $items;
+    h1 {
+        font-style: $ftnStyle;
+    }
+}
+
+@mixin titleSection($color, $border){
+    color: $color;
+    border-bottom: $border;
+}
+
+@mixin shopTitle($color) {
+    font-family: $playfair;
+    font-size: 11.7px;
+    color: $color;
+    letter-spacing: 0.5em;
+}

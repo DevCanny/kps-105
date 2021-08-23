@@ -1,0 +1,8 @@
+Pick one of these: [
+    Social Media;
+    ERP;
+    News;
+    Portofolio;
+    Online Shop;
+    Game;
+]

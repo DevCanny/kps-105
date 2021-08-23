@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto
+}
+
+.header {
+    width: 100%;
+}
+
+.header .banner {
+    width: 100%;
+    background-image: url(http://inspection.gov.mn/new/wp-content/uploads/2020/02/header_img.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1rem 0;
+}
+
+.header .banner img {
+    width: 217px;
+}
+
+.header .navigation {
+    background-color: black;
+    color: white;
+}
+.header .navigation ul {
+    display: flex;
+    list-style: none;
+}
+
+.header .navigation ul li {
+    padding: 10px 1rem;
+}
+
+.header .navigation ul li:hover {
+    background-color: #0066bf;
+}
+
+.wrap {
+    width: 100%;
+    display: flex;
+}
+
+.wrap .left {
+    width: 75%;
+    height: 500px;
+    background-color: tomato;
+}
+
+.wrap .right {
+    width: 25%;
+    height: 400px;
+    background-color: yellow;
+ }
+
+ /* Gert guitseeh */

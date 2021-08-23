@@ -11,6 +11,7 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>Document</title>
+    <h1>can click in: </h1> <p id="timer">READY TO CLICK</p>
 </head>
 
 <body>
@@ -139,7 +140,7 @@
             y: undefined,
         }
 
-        let totalStars = 1000
+        let totalStars = 2500
 
         let stars = [];
 
@@ -179,12 +180,12 @@
             }
 
             getClose() {
-                if(points.x - this.x < 20 && points.x - this.x > -20 && points.y - this.y < 20 && points.y - this.x > -20){
-                    console.log("test")
-                    this.radius = 15
-                } else {
-                    this.radius = 5
-                }
+                // if(points.x - this.x < 20 && points.x - this.x > -20 && points.y - this.y < 20 && points.y - this.x > -20){
+                //     console.log("test")
+                //     this.radius = 15
+                // } else {
+                //     this.radius = 5
+                // }
             }
         }
 
@@ -203,7 +204,6 @@
             let star = new Star(xPostion, yPostion, xSpeed, ySpeed, radius, red, green, blue)
 
             stars.push(star)
-            // let newBall = new Ball(xPostion, yPostion)
         }
 
         // document.addEventListener("click", e => {
@@ -214,20 +214,53 @@
         //     }
         // })
 
-        window.addEventListener("click", e => {
-            for (let i = 0; i < stars.length; i++) {
-                stars[i].drawStars()
-                stars[i].moveToCursor((e.screenX) - 235, (e.screenY) - 55)
-                stars[i].move()
+        let canClick = true
+        let waitTime = 3
+        let decoy = waitTime
+
+        canvas.addEventListener("click", e => {
+            if (canClick == true) {
+                canClick = false
+                decoy = waitTime
+                for (let i = 0; i < stars.length; i++) {
+                    stars[i].drawStars()
+                    stars[i].moveToCursor((e.screenX) - 360, (e.screenY) - 75)
+                    stars[i].move()
+                }
+                setTimeout(function () {
+                    canClick = true
+                }, waitTime * 1000)
             }
         })
 
+        let timer = document.querySelector("#timer")
+
+        let can = true
+
+        setInterval(() => {
+            if (can == true) {
+                can = false
+                setTimeout(function () {
+                    console.log(decoy)
+                    decoy -= 1
+                    can = true
+                }, 1000)
+            }
+        });
+
+        setInterval(() => {
+            if(decoy <= 0){
+                timer.innerHTML = "READY TO CLICK"
+            } else {
+                timer.innerHTML = decoy
+            }
+        })
         window.addEventListener("mousemove", e => {
             points.x = e.screenX
             points.y = e.screenY
-            for (let i = 0; i < stars.length; i++) {
-                stars[i].getClose()
-            }
+            // for (let i = 0; i < stars.length; i++) {
+            //     stars[i].getClose()
+            // }
         })
 
 
